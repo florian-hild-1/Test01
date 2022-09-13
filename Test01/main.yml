@@ -1,0 +1,62 @@
+---
+# tasks file for install_httpd_service
+
+- name: Install httpd service block
+  tags: install_httpd_service
+  block:
+    - name: "Print variables"
+      ansible.builtin.debug:
+        msg:
+          - "ansible_distribution: {{ ansible_distribution }}"
+          - "ansible_distribution_major_version: {{ ansible_distribution_major_version }}"
+          - "rhel_httpd_packages: {{ rhel_httpd_packages }}"
+        verbosity: 1
+
+    # RHEL7
+    - name: "Install httpd with YUM"
+      tags: install_httpd_service_pkgs
+      when: (ansible_distribution == "RedHat" or ansible_distribution == "OracleLinux") and ansible_distribution_major_version <= "7"
+      ansible.builtin.yum:
+        state: "present"
+        name: "{{ rhel_httpd_packages }}"
+
+    # RHEL8
+    - name: "Install httpd with DNF"
+      tags: install_httpd_service_pkgs
+      when: (ansible_distribution == "RedHat" or ansible_distribution == "OracleLinux") and ansible_distribution_major_version >= "8"
+      ansible.builtin.dnf:
+        state: "present"
+        update_cache: "yes"
+        name: "{{ rhel_httpd_packages }}"
+
+    - name: Deploy httpd.conf template
+      tags: install_httpd_conf
+      notify: Restart httpd
+      ansible.builtin.template:
+        src: templates/httpd.conf.j2
+        dest: /etc/httpd/conf/httpd.conf
+        owner: root
+        group: root
+        mode: 0644
+        backup: true
+        validate: httpd -t -f %s
+
+    - name: Open http port on the firewall
+      tags: install_httpd_firewall_config
+      ansible.posix.firewalld:
+        port: 80/tcp
+        permanent: true
+        state: enabled
+        immediate: true
+        zone: public
+
+    - name: Start and enable httpd services
+      tags:
+        - install_httpd_enable_service
+        - install_httpd_start_service
+      ansible.builtin.systemd:
+        name: httpd
+        state: started
+        enabled: true
+
+...
