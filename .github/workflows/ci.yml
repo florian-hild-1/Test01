@@ -6,10 +6,6 @@ name: CI
     branches:
       - main
 
-defaults:
-  run:
-    working-directory: 'geerlingguy.ansible'
-
 jobs:
   check-ansible-syntax:
     paths:
