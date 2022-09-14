@@ -15,5 +15,4 @@ jobs:
         uses: ansible/ansible-lint-action@v6.3.0
         with:
           paths:
-            - '**.yml'
-            - '**.yaml'
+            - '**.y[a]?ml'
