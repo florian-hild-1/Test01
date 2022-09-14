@@ -1,7 +1,7 @@
 ---
 # tasks file for install_httpd_service
 
-- name: Install httpd service block
+- name: Install httpd service test block
   tags: install_httpd_services
   block:
     - name: "Print variables"
