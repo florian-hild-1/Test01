@@ -7,28 +7,14 @@ name: CI
       - main
 
 jobs:
-  check-ansible-syntax:
-    paths:
-      - .github/workflows/check-yaml-syntax.yml
-      - '**.yml'
-      - '**.yaml'
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Lint Ansible Playbook
         uses: ansible/ansible-lint-action@v6.3.0
         with:
-          path: "./"
-  check-yaml-syntax:
-    paths:
-      - .github/workflows/check-yaml-syntax.yml
-      - '**.yml'
-      - '**.yaml'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
-      - run: pip3 install yamllint
-      - run: yamllint --config-file .yamllint.yml .
+          paths:
+            - .github/workflows/check-yaml-syntax.yml
+            - '**.yml'
+            - '**.yaml'
