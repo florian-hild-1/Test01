@@ -2,7 +2,7 @@
 
 name: Check syntax with linters
 
-on:
+'on':
   push:
     branches:
       - main
