@@ -1,0 +1,28 @@
+---
+
+name: Check syntax with linters
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  check-yaml-syntax:
+    runs-on: ubuntu-latest
+    with:
+      path: '**.y[a]?ml'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.0.2
+      - name: Lint yaml Playbook
+        uses: actions/setup-python@v4.2.0
+        with:
+          python-version: '3.x'
+          path: '**.y[a]?ml'
+      - run: python3 -m pip install yamllint
+      - run: yamllint --config-file .yamllint.yml .
+
+...
+
