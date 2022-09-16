@@ -25,6 +25,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3.0.2
+        with:
+          path: "**.y[a]?ml"
       - name: Run ansible-lint-action
         uses: ansible/ansible-lint-action@v6.5.2
         with:
