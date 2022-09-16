@@ -29,4 +29,3 @@ jobs:
         uses: ansible/ansible-lint-action@v6.5.2
 
 ...
-
