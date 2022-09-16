@@ -28,6 +28,5 @@ jobs:
       - name: Run ansible-lint-action
         uses: ansible/ansible-lint-action@v6.5.2
 
-# path: '**.y[a]?ml'
-
 ...
+
