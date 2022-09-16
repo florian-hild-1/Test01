@@ -12,13 +12,15 @@ jobs:
   check-yaml-syntax:
     runs-on: ubuntu-latest
     steps:
+      - name: Validating file extension
+        with:
+          path: '**.y[a]?ml'
       - name: Checkout
         uses: actions/checkout@v3.0.2
       - name: Run yamllint with python3
         uses: actions/setup-python@v4.2.0
         with:
           python-version: '3.x'
-          path: '**.y[a]?ml'
       - run: python3 -m pip install yamllint
       - run: yamllint --config-file .yamllint.yml .
   check-ansible-syntax:
@@ -28,7 +30,5 @@ jobs:
         uses: actions/checkout@v3.0.2
       - name: Run ansible-lint-action
         uses: ansible/ansible-lint-action@v6.5.2
-        with:
-          path: '**.y[a]?ml'
 
 ...
