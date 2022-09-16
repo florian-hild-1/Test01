@@ -6,9 +6,9 @@ name: Check syntax with linters
   push:
     branches:
       - main
-    paths:
-      - '**.yml'
-      - '**.yaml'
+    # paths:
+     # - '**.yml'
+     # - '**.yaml'
   pull_request:
     paths:
       - '**.yml'
