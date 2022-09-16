@@ -7,7 +7,7 @@ name: Check syntax with linters
     branches:
       - main
     paths:
-      - '.*\.ya?ml$'
+      - '**\.ya?ml$'
   pull_request:
     paths:
       - '.*\.ya?ml$'
